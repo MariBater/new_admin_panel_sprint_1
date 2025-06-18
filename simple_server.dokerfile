@@ -1,0 +1,28 @@
+
+
+FROM debian:bullseye-slim
+WORKDIR /code
+
+# Установка Python3 в финальном образе
+RUN apt-get update && \
+    apt-get install -y python3 python3-pip python3-dev build-essential netcat-openbsd && \
+    pip3 install uwsgi gunicorn && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN groupadd -r web && useradd -r -g web web
+
+COPY --chown=web:web . /code
+COPY --chown=web:web /uwsgi.ini /code/uwsgi.ini
+
+RUN chmod +x /code/entrypoint.sh
+
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+RUN python3 manage.py collectstatic --no-input --clear
+
+USER web
+
+EXPOSE 8000/tcp
+
+CMD ["uwsgi", "--ini", "uwsgi.ini"]
+ENTRYPOINT ["/code/entrypoint.sh"]

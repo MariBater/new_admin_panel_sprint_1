@@ -1,0 +1,14 @@
+2025-06-14 00:16:11,709 - INFO - main - Attempting to connect with DSN: dbname='movies_database' user='postgres' host='127.0.0.1' port='5432'
+2025-06-14 00:16:11,713 - INFO - main - Starting data migration process.
+2025-06-14 00:16:11,775 - INFO - main - --- Processing SQLite table 'movies_genre' -> PG table 'content.genre' ---
+2025-06-14 00:16:11,775 - INFO - main - Extracting data from SQLite table: movies_genre
+2025-06-14 00:16:11,779 - CRITICAL - main - SQLite error during migration: no such table: movies_genre
+Traceback (most recent call last):
+  File "d:\work\new_admin_panel_sprint_1\schema_design\main.py", line 354, in <module>
+    for transformed_batch in data_to_load_generator:
+  File "d:\work\new_admin_panel_sprint_1\schema_design\main.py", line 349, in <genexpr>
+    data_to_load_generator = (
+                             ^
+  File "d:\work\new_admin_panel_sprint_1\schema_design\main.py", line 187, in extract_sqlite_data
+    sqlite_cursor.execute(f"SELECT * FROM {table_name}")
+sqlite3.OperationalError: no such table: movies_genre

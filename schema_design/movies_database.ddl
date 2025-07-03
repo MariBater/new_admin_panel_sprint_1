@@ -1,78 +1,89 @@
-CREATE EXTENSION IF NOT EXISTS "pgcrypto";
-
--- Создайте схему
+-- Создаем схему, если она еще не существует
 CREATE SCHEMA IF NOT EXISTS content;
 
--- Жанры
-CREATE TABLE content.genre (
+-- Устанавливаем pgcrypto для генерации UUID
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+-- Функция для обновления поля modified
+CREATE OR REPLACE FUNCTION update_modified_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.modified = now();
+    RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+-- Таблица для жанров
+CREATE TABLE IF NOT EXISTS content.genre (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    name VARCHAR(255) NOT NULL UNIQUE,
+    name VARCHAR(255) NOT NULL,
     description TEXT,
-    created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    modified TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    created TIMESTAMP WITH TIME ZONE DEFAULT now(),
+    modified TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
--- Кинопроизведения
-CREATE TABLE content.film_work (
+-- Триггер для genre
+CREATE TRIGGER update_genre_modtime
+BEFORE UPDATE ON content.genre
+FOR EACH ROW
+EXECUTE PROCEDURE update_modified_column();
+
+-- Таблица для персон
+CREATE TABLE IF NOT EXISTS content.person (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    full_name VARCHAR(255) NOT NULL,
+    created TIMESTAMP WITH TIME ZONE DEFAULT now(),
+    modified TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
+-- Триггер для person
+CREATE TRIGGER update_person_modtime
+BEFORE UPDATE ON content.person
+FOR EACH ROW
+EXECUTE PROCEDURE update_modified_column();
+
+-- Таблица для кинопроизведений
+CREATE TABLE IF NOT EXISTS content.film_work (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title VARCHAR(255) NOT NULL,
     description TEXT,
     creation_date DATE,
-    rating NUMERIC(3,1) CHECK (rating >= 0 AND rating <= 10),
-    type VARCHAR(20) NOT NULL,
-    created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    modified TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    rating FLOAT CHECK (rating >= 0 AND rating <= 10),
+    type VARCHAR(50) NOT NULL,
+    created TIMESTAMP WITH TIME ZONE DEFAULT now(),
+    modified TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
--- Участники
-CREATE TABLE content.person (
+-- Триггер для film_work
+CREATE TRIGGER update_film_work_modtime
+BEFORE UPDATE ON content.film_work
+FOR EACH ROW
+EXECUTE PROCEDURE update_modified_column();
+
+-- Таблица для связи кинопроизведений и жанров (многие-ко-многим)
+CREATE TABLE IF NOT EXISTS content.genre_film_work (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    full_name VARCHAR(255) NOT NULL,
-    created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    modified TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    film_work_id UUID NOT NULL REFERENCES content.film_work(id) ON DELETE CASCADE,
+    genre_id UUID NOT NULL REFERENCES content.genre(id) ON DELETE CASCADE,
+    created TIMESTAMP WITH TIME ZONE DEFAULT now(),
+    CONSTRAINT film_work_genre_unique UNIQUE (film_work_id, genre_id)
 );
 
--- Связь: Жанры  Кинопроизведения
-CREATE TABLE content.genre_film_work (
+-- Таблица для связи кинопроизведений и персон (многие-ко-многим)
+CREATE TABLE IF NOT EXISTS content.person_film_work (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    genre_id UUID NOT NULL,
-    film_work_id UUID NOT NULL,
-    created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    UNIQUE (genre_id, film_work_id),
-    
-    FOREIGN KEY (genre_id) 
-        REFERENCES content.genre(id) 
-        ON DELETE CASCADE,
-        
-    FOREIGN KEY (film_work_id) 
-        REFERENCES content.film_work(id) 
-        ON DELETE CASCADE
+    film_work_id UUID NOT NULL REFERENCES content.film_work(id) ON DELETE CASCADE,
+    person_id UUID NOT NULL REFERENCES content.person(id) ON DELETE CASCADE,
+    role VARCHAR(255) NOT NULL,
+    created TIMESTAMP WITH TIME ZONE DEFAULT now(),
+    CONSTRAINT film_work_person_role_unique UNIQUE (film_work_id, person_id, role)
 );
 
--- Связь: Участники Кинопроизведения + Роль
-CREATE TABLE content.person_film_work (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    person_id UUID NOT NULL,
-    film_work_id UUID NOT NULL,
-    role VARCHAR(50) NOT NULL,
-    created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    UNIQUE (person_id, film_work_id, role),
-    
-    FOREIGN KEY (person_id) 
-        REFERENCES content.person(id) 
-        ON DELETE CASCADE,
-        
-    FOREIGN KEY (film_work_id) 
-        REFERENCES content.film_work(id) 
-        ON DELETE CASCADE
-);
+-- Индексы для ускорения поиска по внешним ключам
+CREATE INDEX IF NOT EXISTS genre_film_work_film_work_id_idx ON content.genre_film_work (film_work_id);
+CREATE INDEX IF NOT EXISTS genre_film_work_genre_id_idx ON content.genre_film_work (genre_id);
+CREATE INDEX IF NOT EXISTS person_film_work_film_work_id_idx ON content.person_film_work (film_work_id);
+CREATE INDEX IF NOT EXISTS person_film_work_person_id_idx ON content.person_film_work (person_id);
 
--- Индексы (аналогичны предыдущим)
-CREATE INDEX idx_film_work_title ON content.film_work(title);
-CREATE INDEX idx_film_work_rating ON content.film_work(rating);
-CREATE INDEX idx_film_work_creation_date ON content.film_work(creation_date);
-CREATE INDEX idx_person_full_name ON content.person(full_name);
-CREATE INDEX idx_genre_film_work_film ON content.genre_film_work(film_work_id);
-CREATE INDEX idx_person_film_work_film ON content.person_film_work(film_work_id);
-CREATE INDEX idx_person_film_work_person ON content.person_film_work(person_id);
-CREATE INDEX idx_person_film_work_role ON content.person_film_work(role);
+-- Индекс для поиска по дате создания кинопроизведения
+CREATE INDEX IF NOT EXISTS film_work_creation_date_idx ON content.film_work (creation_date);

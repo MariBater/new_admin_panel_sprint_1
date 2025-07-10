@@ -7,11 +7,13 @@ CONFIG_DIR = Path(__file__).resolve().parent
 ENV_FILE_PATH = CONFIG_DIR / 'et.env'
 
 if ENV_FILE_PATH.exists():
-    load_dotenv(dotenv_path=ENV_FILE_PATH)
+    load_dotenv(dotenv_path=ENV_FILE_PATH, encoding='utf-8')
 else:
     logging.warning(f"Файл окружения не найден по пути {ENV_FILE_PATH}")
 
-from .components.database import DATABASES
+from .components.database import DATABASES# settings.py
+
+
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'your_default_fallback_secret_key_if_not_set')
 
@@ -28,16 +30,23 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'movies.apps.MoviesConfig',
     'django_extensions',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:8080",
 ]
 
 ROOT_URLCONF = 'config.urls'

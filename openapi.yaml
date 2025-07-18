@@ -1,0 +1,58 @@
+
+openapi: 3.0.0
+info:
+  title: Movies API
+  version: 1.0.0
+  description: API для управления фильмами в новой админ-панели.
+
+paths:
+  /api/v1/movies/:
+    get:
+      summary: Получить список кинопроизведений
+      description: Возвращает постраничный список кинопроизведений.
+      tags:
+        - movies
+      responses:
+        '200':
+          description: Успешный ответ со списком кинопроизведений.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 50
+                  total_pages:
+                    type: integer
+                    example: 1
+                  prev:
+                    type: integer
+                    nullable: true
+                    example: null
+                  next:
+                    type: integer
+                    nullable: true
+                    example: 2
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                          example: "The Matrix"
+                        description:
+                          type: string
+                          example: "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers."
+                        creation_date:
+                          type: string
+                          format: date
+                          example: "1999-03-31"
+                        rating:
+                          type: number
+                          format: float
+                          example: 8.7
+                        type:
+                          type: string
+                          example: "movie"

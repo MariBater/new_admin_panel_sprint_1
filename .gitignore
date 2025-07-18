@@ -1,0 +1,10 @@
+config/et.env
+SECRET_KEY
+db.sqlite
+migration.log
+content.csv
+# Python
+__pycache__/
+*.pyc
+
+# Other ignores...

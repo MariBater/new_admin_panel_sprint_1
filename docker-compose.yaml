@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  postgres:
+    # Рекомендуется закреплять конкретную версию образа для предсказуемости
+    image: postgres:16-alpine
+
+    # Политика перезапуска контейнера
+    restart: unless-stopped
+
+    # Загрузка переменных окружения из файла .env для безопасности
+    env_file:
+      - ./.env
+
+    # Использование именованного тома (volume) для хранения данных - лучшая практика
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+
+    # Проброс порта для возможности подключения к БД с хост-машины
+    ports:
+      - "5430:5432"
+
+    # Настройки производительности PostgreSQL, соответствующие лимитам ресурсов
+    command: >
+      postgres -c max_connections=200 -c shared_buffers=128MB -c effective_cache_size=384MB
+      -c maintenance_work_mem=64MB -c checkpoint_completion_target=0.9 -c wal_buffers=16MB
+      -c default_statistics_target=100
+
+    # Проверка состояния, чтобы убедиться, что база данных готова принимать подключения
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  pgdata:
+    driver: local

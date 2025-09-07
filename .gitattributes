@@ -1,0 +1,5 @@
+# Treat all files as text by default, and handle line endings automatically.
+* text=auto
+
+# Force shell scripts to always use LF (Unix) line endings.
+*.sh text eol=lf

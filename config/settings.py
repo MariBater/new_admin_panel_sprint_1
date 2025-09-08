@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'movies.apps.MoviesConfig',
-    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -60,7 +59,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -79,6 +77,20 @@ TEMPLATES = [
         },
     },
 ]
+
+if DEBUG:
+    INSTALLED_APPS.append('debug_toolbar')
+    # The Debug Toolbar middleware should be included as early as possible.
+    # However, it must come after any other middleware that encodes the
+    # response's content, such as GZipMiddleware.
+    # The middleware is inserted in reverse order, so insert it at index 1
+    # to ensure it runs after the SessionMiddleware.
+    MIDDLEWARE.insert(1, 'debug_toolbar.middleware.DebugToolbarMiddleware')
+
+    # This allows the debug toolbar to work in Docker
+    import socket
+    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+    INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "localhost"]
 
 WSGI_APPLICATION = 'config.wsgi.application'
 

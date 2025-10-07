@@ -30,6 +30,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'film work',
                 'verbose_name_plural': 'film works',
                 'db_table': 'content"."film_work',
+                'managed': False,
             },
         ),
         migrations.CreateModel(
@@ -45,6 +46,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'genre',
                 'verbose_name_plural': 'genres',
                 'db_table': 'content"."genre',
+                'managed': False,
             },
         ),
         migrations.CreateModel(
@@ -59,6 +61,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'person',
                 'verbose_name_plural': 'persons',
                 'db_table': 'content"."person',
+                'managed': False,
             },
         ),
         migrations.CreateModel(
@@ -73,6 +76,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'genre of film work',
                 'verbose_name_plural': 'genres of film works',
                 'db_table': 'content"."genre_film_work',
+                'managed': False,
             },
         ),
         migrations.AddField(
@@ -93,6 +97,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'film work participant',
                 'verbose_name_plural': 'film work participants',
                 'db_table': 'content"."person_film_work',
+                'managed': False,
                 'unique_together': {('film_work', 'person', 'role')},
             },
         ),

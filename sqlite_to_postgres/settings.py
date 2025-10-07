@@ -4,7 +4,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from .dataclasses import (FilmWork, Genre, GenreFilmWork, Person,
+from .data_models import (FilmWork, Genre, GenreFilmWork, Person,
                           PersonFilmWork)
 
 # Load environment variables
@@ -15,8 +15,8 @@ dsl = {
     'dbname': os.getenv('POSTGRES_DB'),
     'user': os.getenv('POSTGRES_USER'),
     'password': os.getenv('POSTGRES_PASSWORD'),
-    'host': os.getenv('POSTGRES_HOST'),
-    'port': os.getenv('POSTGRES_PORT'),
+    'host': os.getenv('DB_HOST'),
+    'port': os.getenv('DB_PORT'),
 }
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -49,6 +49,17 @@ def _create_table_config(
         config["columns_to_drop"] = drop_columns
     return config
 
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRES_DB'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'), # <-- Самое важное изменение
+        'PORT': os.environ.get('DB_PORT'),
+    }
+}
 
 # This configuration maps target PostgreSQL tables to their SQLite sources,
 # corresponding dataclasses for validation and transformation, and other metadata.

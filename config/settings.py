@@ -87,10 +87,8 @@ if DEBUG:
     # to ensure it runs after the SessionMiddleware.
     MIDDLEWARE.insert(1, 'debug_toolbar.middleware.DebugToolbarMiddleware')
 
-    # This allows the debug toolbar to work in Docker
-    import socket
-    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
-    INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "localhost"]
+    # This allows the debug toolbar to work in Docker.
+    INTERNAL_IPS = ['127.0.0.1', 'localhost']
 
 WSGI_APPLICATION = 'config.wsgi.application'
 

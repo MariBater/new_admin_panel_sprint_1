@@ -3,6 +3,7 @@ services:
     image: postgres:13-alpine
     container_name: movies_db
     volumes:
+      - ./sqlite_to_postgres/movies_database.ddl:/docker-entrypoint-initdb.d/init.sql
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./.env
@@ -12,18 +13,52 @@ services:
       timeout: 5s
       retries: 5
 
-  web:
-    build: .
-    container_name: movies_app
-    volumes:
-      - .:/opt/app
+  nginx:
+    build: ./nginx
+    container_name: movies_nginx
     ports:
-      - "8000:8000"
+      - "80:80"
+    volumes:
+      - static_volume:/var/www/static
+      - media_volume:/var/www/media
+      - uwsgi_socket:/var/run/uwsgi
+    depends_on:
+      - web
+
+  web:
+    build:
+      context: .
+      dockerfile: app/Dockerfile
+    image: new_admin_panel_sprint-app
+    container_name: movies_app
+    command: ["/app/wait-for-postgres.sh", "db", "/app/run_uwsgi.sh"]
+    env_file:
+      - ./.env
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+      - uwsgi_socket:/var/run/uwsgi
+    depends_on:
+      db:
+        condition: service_healthy
+
+  etl:
+    image: new_admin_panel_sprint-app
+    container_name: movies_etl
+    command: ["/app/wait-for-postgres.sh", "db", "python", "-m", "sqlite_to_postgres.load_data"]
+    volumes:
+      - ./logs:/app/logs
     env_file:
       - ./.env
     depends_on:
+      web:
+        condition: service_started
       db:
         condition: service_healthy
 
 volumes:
   postgres_data:
+  static_volume:
+  media_volume:
+  uwsgi_socket:
+  logs:

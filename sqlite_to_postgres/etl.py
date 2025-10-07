@@ -59,7 +59,8 @@ def load_to_postgres(pg_cursor: psycopg.Cursor, table_name: str, columns: list[s
         batch_as_tuples = [astuple(item) for item in batch_data]
         pg_cursor.executemany(query, batch_as_tuples)
     except psycopg.Error as e:
-        logger.error(f"PostgreSQL error loading data into {table_name}. Query: {query[:200]}... Error: {e}", exc_info=True)
+        # Use as_string to get a loggable representation of the query
+        logger.error(f"PostgreSQL error loading data into {table_name}. Query: {query.as_string(pg_cursor)[:200]}... Error: {e}", exc_info=True)
         raise
     except Exception as e:
         logger.error(f"Unexpected error loading data into {table_name}. Error: {e}", exc_info=True)

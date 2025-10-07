@@ -13,8 +13,10 @@ def _parse_datetime(value: str) -> datetime | None:
     if not isinstance(value, str):
         return None
 
-    # Normalize 'Z' to a valid UTC offset
+    # Normalize 'Z' and short UTC offsets to a valid format for fromisoformat
     dt_value = value.replace('Z', '+00:00')
+    if dt_value.endswith('+00'):
+        dt_value += ':00'
 
     # Try the standard and fast ISO 8601 format first
     try:

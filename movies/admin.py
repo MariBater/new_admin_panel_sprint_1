@@ -1,28 +1,23 @@
 from django.contrib import admin
+
 from .models import FilmWork, Genre, GenreFilmWork, Person, PersonFilmWork
 
 
 class GenreFilmWorkInline(admin.TabularInline):
-    """
-    Позволяет редактировать жанры на странице кинопроизведения.
-    """
     model = GenreFilmWork
     autocomplete_fields = ('genre',)
-    extra = 0
+    extra = 1
 
 
 class PersonFilmWorkInline(admin.TabularInline):
-    """
-    Позволяет редактировать участников на странице кинопроизведения.
-    """
     model = PersonFilmWork
     autocomplete_fields = ('person',)
-    extra = 0
+    extra = 1
 
 
 @admin.register(Genre)
 class GenreAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('name', 'description')
     search_fields = ('name',)
 
 
@@ -34,14 +29,8 @@ class PersonAdmin(admin.ModelAdmin):
 
 @admin.register(FilmWork)
 class FilmWorkAdmin(admin.ModelAdmin):
-    # Подключаем инлайны для управления жанрами и участниками
+    exclude = ('genres', 'persons')
     inlines = (GenreFilmWorkInline, PersonFilmWorkInline)
-
-    # Поля, которые будут отображаться в списке кинопроизведений
-    list_display = ('title', 'type', 'creation_date', 'rating', 'created', 'modified')
-
-    # Фильтры для удобной навигации
+    list_display = ('title', 'type', 'creation_date', 'rating')
     list_filter = ('type',)
-
-    # Поля, по которым будет работать поиск
     search_fields = ('title', 'description', 'id')

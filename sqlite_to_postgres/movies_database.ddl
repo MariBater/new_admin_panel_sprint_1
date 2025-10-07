@@ -8,15 +8,15 @@ CREATE TABLE IF NOT EXISTS content.film_work (
     creation_date DATE,
     rating FLOAT,
     type TEXT NOT NULL,
-    created TIMESTAMP WITHOUT TIME ZONE,
-    modified TIMESTAMP WITHOUT TIME ZONE
+    created TIMESTAMP WITH TIME ZONE,
+    modified TIMESTAMP WITH TIME ZONE
 );
 
 CREATE TABLE IF NOT EXISTS content.person (
     id UUID PRIMARY KEY,
     full_name TEXT NOT NULL,
-    created TIMESTAMP WITHOUT TIME ZONE,
-    modified TIMESTAMP WITHOUT TIME ZONE
+    created TIMESTAMP WITH TIME ZONE,
+    modified TIMESTAMP WITH TIME ZONE
 );
 
 CREATE TABLE IF NOT EXISTS content.person_film_work (
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS content.person_film_work (
     person_id UUID NOT NULL,
     film_work_id UUID NOT NULL,
     role TEXT NOT NULL,
-    created TIMESTAMP WITHOUT TIME ZONE,
+    created TIMESTAMP WITH TIME ZONE,
     CONSTRAINT fk_pfw_person_id
         FOREIGN KEY (person_id)
         REFERENCES content.person (id)
@@ -39,15 +39,15 @@ CREATE TABLE IF NOT EXISTS content.genre (
     id UUID PRIMARY KEY,
     name TEXT NOT NULL,
     description TEXT,
-    created TIMESTAMP WITHOUT TIME ZONE,
-    modified TIMESTAMP WITHOUT TIME ZONE
+    created TIMESTAMP WITH TIME ZONE,
+    modified TIMESTAMP WITH TIME ZONE
 );
 
 CREATE TABLE IF NOT EXISTS content.genre_film_work (
     id UUID PRIMARY KEY,
     genre_id UUID NOT NULL,
     film_work_id UUID NOT NULL,
-    created TIMESTAMP WITHOUT TIME ZONE,
+    created TIMESTAMP WITH TIME ZONE,
     CONSTRAINT fk_gfw_genre_id
         FOREIGN KEY (genre_id)
         REFERENCES content.genre (id)

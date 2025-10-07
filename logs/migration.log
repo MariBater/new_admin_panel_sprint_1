@@ -1,0 +1,209 @@
+2025-10-07 20:54:14,775 - INFO - load_data - Starting data migration process.
+2025-10-07 20:54:14,904 - INFO - load_data - Successfully connected to databases.
+2025-10-07 20:54:14,905 - INFO - migrator - --- Processing SQLite table 'genre' -> PG table 'content.genre' ---
+2025-10-07 20:54:14,905 - INFO - etl - Extracting data from SQLite table: genre
+2025-10-07 20:54:14,939 - INFO - etl - Loading batch of 26 items into PostgreSQL table: content.genre
+2025-10-07 20:54:14,951 - INFO - migrator - Data loading complete for PG table: content.genre
+2025-10-07 20:54:14,952 - INFO - etl - Starting data transfer test for table: content.genre
+2025-10-07 20:54:14,954 - INFO - etl - SQLite table 'genre' count: 26
+2025-10-07 20:54:14,959 - INFO - etl - PostgreSQL table 'content.genre' count: 26
+2025-10-07 20:54:14,960 - INFO - etl - Count check passed for content.genre.
+2025-10-07 20:54:14,969 - CRITICAL - load_data - An unexpected error occurred during migration: Data mismatch for content.genre on ID 0b105f87-e0a5-45dc-8ce7-f8632088f390:
+Original: Genre(id=UUID('0b105f87-e0a5-45dc-8ce7-f8632088f390'), name='Western', description=None, created=datetime.datetime(2021, 6, 16, 20, 14, 9, 310517, tzinfo=datetime.timezone.utc), modified=datetime.datetime(2021, 6, 16, 20, 14, 9, 310533, tzinfo=datetime.timezone.utc))
+PG_copy:  Genre(id=UUID('0b105f87-e0a5-45dc-8ce7-f8632088f390'), name='Western', description=None, created=datetime.datetime(2021, 6, 16, 20, 14, 9, 310517), modified=datetime.datetime(2021, 6, 16, 20, 14, 9, 310533))
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/load_data.py", line 32, in migrate_data
+    process_table(table_name, sqlite_conn, pg_conn)
+  File "/app/sqlite_to_postgres/migrator.py", line 51, in process_table
+    test_data_transfer(
+  File "/app/sqlite_to_postgres/etl.py", line 124, in test_data_transfer
+    assert original == transferred, f"Data mismatch for {pg_table_name} on ID {getattr(original, pk_column)}:\nOriginal: {original}\nPG_copy:  {transferred}"
+AssertionError: Data mismatch for content.genre on ID 0b105f87-e0a5-45dc-8ce7-f8632088f390:
+Original: Genre(id=UUID('0b105f87-e0a5-45dc-8ce7-f8632088f390'), name='Western', description=None, created=datetime.datetime(2021, 6, 16, 20, 14, 9, 310517, tzinfo=datetime.timezone.utc), modified=datetime.datetime(2021, 6, 16, 20, 14, 9, 310533, tzinfo=datetime.timezone.utc))
+PG_copy:  Genre(id=UUID('0b105f87-e0a5-45dc-8ce7-f8632088f390'), name='Western', description=None, created=datetime.datetime(2021, 6, 16, 20, 14, 9, 310517), modified=datetime.datetime(2021, 6, 16, 20, 14, 9, 310533))
+2025-10-07 20:54:14,971 - WARNING - load_data - PostgreSQL transaction has been rolled back due to an unexpected error.
+2025-10-07 20:54:14,973 - INFO - load_data - Data migration process finished. Database connections are closed.
+2025-10-07 21:02:38,111 - INFO - load_data - Starting data migration process.
+2025-10-07 21:02:38,242 - INFO - load_data - Successfully connected to databases.
+2025-10-07 21:02:38,243 - INFO - migrator - --- Processing SQLite table 'genre' -> PG table 'content.genre' ---
+2025-10-07 21:02:38,244 - INFO - etl - Extracting data from SQLite table: genre
+2025-10-07 21:02:38,281 - INFO - etl - Loading batch of 26 items into PostgreSQL table: content.genre
+2025-10-07 21:02:38,296 - INFO - migrator - Data loading complete for PG table: content.genre
+2025-10-07 21:02:38,297 - INFO - etl - Starting data transfer test for table: content.genre
+2025-10-07 21:02:38,298 - INFO - etl - SQLite table 'genre' count: 26
+2025-10-07 21:02:38,306 - INFO - etl - PostgreSQL table 'content.genre' count: 26
+2025-10-07 21:02:38,308 - INFO - etl - Count check passed for content.genre.
+2025-10-07 21:02:38,315 - INFO - etl - Content check passed for a sample from content.genre.
+2025-10-07 21:02:38,316 - INFO - migrator - --- Successfully processed and tested data from 'genre' to 'content.genre' ---
+2025-10-07 21:02:38,317 - INFO - migrator - --- Processing SQLite table 'person' -> PG table 'content.person' ---
+2025-10-07 21:02:38,319 - INFO - etl - Extracting data from SQLite table: person
+2025-10-07 21:02:38,325 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,347 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,364 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,382 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,410 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,434 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,471 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,497 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,524 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,557 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,590 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,624 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,649 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,680 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,709 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,738 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,798 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,833 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,857 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,879 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,900 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,920 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,936 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,956 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,971 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:38,987 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:39,009 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:39,026 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:39,048 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:39,070 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:39,092 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:39,112 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:39,137 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:39,157 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:39,175 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:39,195 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:39,213 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:39,232 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:39,252 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:39,277 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:39,296 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person
+2025-10-07 21:02:39,317 - INFO - etl - Loading batch of 66 items into PostgreSQL table: content.person
+2025-10-07 21:02:39,329 - INFO - migrator - Data loading complete for PG table: content.person
+2025-10-07 21:02:39,330 - INFO - etl - Starting data transfer test for table: content.person
+2025-10-07 21:02:39,334 - INFO - etl - SQLite table 'person' count: 4166
+2025-10-07 21:02:39,337 - INFO - etl - PostgreSQL table 'content.person' count: 4166
+2025-10-07 21:02:39,338 - INFO - etl - Count check passed for content.person.
+2025-10-07 21:02:39,342 - INFO - etl - Content check passed for a sample from content.person.
+2025-10-07 21:02:39,345 - INFO - migrator - --- Successfully processed and tested data from 'person' to 'content.person' ---
+2025-10-07 21:02:39,346 - INFO - migrator - --- Processing SQLite table 'film_work' -> PG table 'content.film_work' ---
+2025-10-07 21:02:39,347 - INFO - etl - Extracting data from SQLite table: film_work
+2025-10-07 21:02:39,353 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.film_work
+2025-10-07 21:02:39,394 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.film_work
+2025-10-07 21:02:39,428 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.film_work
+2025-10-07 21:02:39,474 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.film_work
+2025-10-07 21:02:39,505 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.film_work
+2025-10-07 21:02:39,530 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.film_work
+2025-10-07 21:02:39,551 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.film_work
+2025-10-07 21:02:39,595 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.film_work
+2025-10-07 21:02:39,631 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.film_work
+2025-10-07 21:02:39,668 - INFO - etl - Loading batch of 99 items into PostgreSQL table: content.film_work
+2025-10-07 21:02:39,695 - INFO - migrator - Data loading complete for PG table: content.film_work
+2025-10-07 21:02:39,696 - INFO - etl - Starting data transfer test for table: content.film_work
+2025-10-07 21:02:39,698 - INFO - etl - SQLite table 'film_work' count: 999
+2025-10-07 21:02:39,702 - INFO - etl - PostgreSQL table 'content.film_work' count: 999
+2025-10-07 21:02:39,703 - INFO - etl - Count check passed for content.film_work.
+2025-10-07 21:02:39,708 - INFO - etl - Content check passed for a sample from content.film_work.
+2025-10-07 21:02:39,709 - INFO - migrator - --- Successfully processed and tested data from 'film_work' to 'content.film_work' ---
+2025-10-07 21:02:39,712 - INFO - migrator - --- Processing SQLite table 'genre_film_work' -> PG table 'content.genre_film_work' ---
+2025-10-07 21:02:39,713 - INFO - etl - Extracting data from SQLite table: genre_film_work
+2025-10-07 21:02:39,717 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.genre_film_work
+2025-10-07 21:02:39,751 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.genre_film_work
+2025-10-07 21:02:39,783 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.genre_film_work
+2025-10-07 21:02:39,815 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.genre_film_work
+2025-10-07 21:02:39,840 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.genre_film_work
+2025-10-07 21:02:39,864 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.genre_film_work
+2025-10-07 21:02:39,896 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.genre_film_work
+2025-10-07 21:02:39,946 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.genre_film_work
+2025-10-07 21:02:39,971 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.genre_film_work
+2025-10-07 21:02:39,998 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.genre_film_work
+2025-10-07 21:02:40,029 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.genre_film_work
+2025-10-07 21:02:40,058 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.genre_film_work
+2025-10-07 21:02:40,085 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.genre_film_work
+2025-10-07 21:02:40,117 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.genre_film_work
+2025-10-07 21:02:40,172 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.genre_film_work
+2025-10-07 21:02:40,217 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.genre_film_work
+2025-10-07 21:02:40,250 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.genre_film_work
+2025-10-07 21:02:40,281 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.genre_film_work
+2025-10-07 21:02:40,319 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.genre_film_work
+2025-10-07 21:02:40,354 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.genre_film_work
+2025-10-07 21:02:40,388 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.genre_film_work
+2025-10-07 21:02:40,421 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.genre_film_work
+2025-10-07 21:02:40,450 - INFO - etl - Loading batch of 31 items into PostgreSQL table: content.genre_film_work
+2025-10-07 21:02:40,459 - INFO - migrator - Data loading complete for PG table: content.genre_film_work
+2025-10-07 21:02:40,460 - INFO - etl - Starting data transfer test for table: content.genre_film_work
+2025-10-07 21:02:40,462 - INFO - etl - SQLite table 'genre_film_work' count: 2231
+2025-10-07 21:02:40,465 - INFO - etl - PostgreSQL table 'content.genre_film_work' count: 2231
+2025-10-07 21:02:40,467 - INFO - etl - Count check passed for content.genre_film_work.
+2025-10-07 21:02:40,471 - INFO - etl - Content check passed for a sample from content.genre_film_work.
+2025-10-07 21:02:40,472 - INFO - migrator - --- Successfully processed and tested data from 'genre_film_work' to 'content.genre_film_work' ---
+2025-10-07 21:02:40,473 - INFO - migrator - --- Processing SQLite table 'person_film_work' -> PG table 'content.person_film_work' ---
+2025-10-07 21:02:40,474 - INFO - etl - Extracting data from SQLite table: person_film_work
+2025-10-07 21:02:40,478 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:40,509 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:40,538 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:40,562 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:40,588 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:40,614 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:40,646 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:40,676 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:40,702 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:40,727 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:40,751 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:40,782 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:40,814 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:40,837 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:40,866 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:40,893 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:40,921 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:40,948 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:40,972 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:40,998 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,033 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,065 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,095 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,123 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,152 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,181 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,207 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,232 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,260 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,285 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,313 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,340 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,367 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,398 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,432 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,473 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,527 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,585 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,661 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,728 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,781 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,830 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,892 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:41,963 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:42,017 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:42,074 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:42,132 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:42,181 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:42,270 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:42,356 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:42,430 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:42,489 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:42,545 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:42,603 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:42,667 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:42,720 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:42,788 - INFO - etl - Loading batch of 100 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:42,867 - INFO - etl - Loading batch of 83 items into PostgreSQL table: content.person_film_work
+2025-10-07 21:02:42,904 - INFO - migrator - Data loading complete for PG table: content.person_film_work
+2025-10-07 21:02:42,906 - INFO - etl - Starting data transfer test for table: content.person_film_work
+2025-10-07 21:02:42,910 - INFO - etl - SQLite table 'person_film_work' count: 5783
+2025-10-07 21:02:42,916 - INFO - etl - PostgreSQL table 'content.person_film_work' count: 5783
+2025-10-07 21:02:42,917 - INFO - etl - Count check passed for content.person_film_work.
+2025-10-07 21:02:42,925 - INFO - etl - Content check passed for a sample from content.person_film_work.
+2025-10-07 21:02:42,929 - INFO - migrator - --- Successfully processed and tested data from 'person_film_work' to 'content.person_film_work' ---
+2025-10-07 21:02:42,930 - INFO - load_data - Full migration transaction committed successfully.
+2025-10-07 21:02:42,932 - INFO - load_data - 🎉 Данные успешно перенесены и протестированы для всех сконфигурированных таблиц!
+2025-10-07 21:02:42,944 - INFO - load_data - Data migration process finished. Database connections are closed.

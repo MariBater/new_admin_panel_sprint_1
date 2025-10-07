@@ -8,7 +8,7 @@ def setup_logging():
         level=logging.INFO,
         format='%(asctime)s - %(levelname)s - %(module)s - %(message)s',
         handlers=[
-            logging.FileHandler("migration.log", mode='a', encoding='utf-8'),
+            logging.FileHandler("/app/logs/migration.log", mode='a', encoding='utf-8'),
             logging.StreamHandler(sys.stderr)  # Use stderr for logs, which is conventional
         ]
     )

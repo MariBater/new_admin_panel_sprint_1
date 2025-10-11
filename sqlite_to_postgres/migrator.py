@@ -19,7 +19,7 @@ def process_table(table_name: str, sqlite_conn, pg_conn):
 
     config = TABLE_CONFIGS[table_name]
     sqlite_source_table = config["sqlite_source_table"]
-    pg_target_table = f"content.{table_name}"
+    pg_target_table = table_name
 
     logger.info(f"--- Processing SQLite table '{sqlite_source_table}' -> PG table '{pg_target_table}' ---")
 

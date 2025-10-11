@@ -207,3 +207,360 @@ PG_copy:  Genre(id=UUID('0b105f87-e0a5-45dc-8ce7-f8632088f390'), name='Western',
 2025-10-07 21:02:42,930 - INFO - load_data - Full migration transaction committed successfully.
 2025-10-07 21:02:42,932 - INFO - load_data - 🎉 Данные успешно перенесены и протестированы для всех сконфигурированных таблиц!
 2025-10-07 21:02:42,944 - INFO - load_data - Data migration process finished. Database connections are closed.
+2025-10-08 14:24:07,178 - INFO - load_data - Starting data migration process.
+2025-10-08 14:24:07,197 - INFO - load_data - Successfully connected to databases.
+2025-10-08 14:24:07,197 - INFO - migrator - --- Processing SQLite table 'genre' -> PG table 'content.genre' ---
+2025-10-08 14:24:07,198 - INFO - etl - Extracting data from SQLite table: genre
+2025-10-08 14:24:07,205 - INFO - etl - Loading batch of 26 items into PostgreSQL table: content.genre
+2025-10-08 14:24:07,216 - ERROR - etl - PostgreSQL error loading data into content.genre. Query: INSERT INTO "content"."genre" ("id", "name", "description", "created", "modified") VALUES (%s, %s, %s, %s, %s) ON CONFLICT ("id") DO NOTHING... Error: relation "content.genre" does not exist
+LINE 1: INSERT INTO "content"."genre" ("id", "name", "description", ...
+                    ^
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/etl.py", line 60, in load_to_postgres
+    pg_cursor.executemany(query, batch_as_tuples)
+  File "/usr/local/lib/python3.10/site-packages/psycopg/cursor.py", line 767, in executemany
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "content.genre" does not exist
+LINE 1: INSERT INTO "content"."genre" ("id", "name", "description", ...
+                    ^
+2025-10-08 14:24:07,219 - CRITICAL - load_data - Database error during migration: relation "content.genre" does not exist
+LINE 1: INSERT INTO "content"."genre" ("id", "name", "description", ...
+                    ^
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/load_data.py", line 32, in migrate_data
+    process_table(table_name, sqlite_conn, pg_conn)
+  File "/app/sqlite_to_postgres/migrator.py", line 37, in process_table
+    load_to_postgres(
+  File "/app/sqlite_to_postgres/etl.py", line 60, in load_to_postgres
+    pg_cursor.executemany(query, batch_as_tuples)
+  File "/usr/local/lib/python3.10/site-packages/psycopg/cursor.py", line 767, in executemany
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "content.genre" does not exist
+LINE 1: INSERT INTO "content"."genre" ("id", "name", "description", ...
+                    ^
+2025-10-08 14:24:07,220 - WARNING - load_data - PostgreSQL transaction has been rolled back due to a database error.
+2025-10-08 14:24:07,221 - INFO - load_data - Data migration process finished. Database connections are closed.
+2025-10-08 15:20:20,246 - INFO - load_data - Starting data migration process.
+2025-10-08 15:20:20,331 - CRITICAL - load_data - Database error during migration: connection failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/load_data.py", line 26, in migrate_data
+    psycopg.connect(**dsl, row_factory=dict_row) as pg_conn:
+  File "/usr/local/lib/python3.10/site-packages/psycopg/connection.py", line 748, in connect
+    raise last_ex.with_traceback(None)
+psycopg.OperationalError: connection failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+2025-10-08 15:20:20,333 - WARNING - load_data - PostgreSQL transaction has been rolled back due to a database error.
+2025-10-08 15:20:20,333 - INFO - load_data - Data migration process finished. Database connections are closed.
+2025-10-08 15:20:46,521 - INFO - load_data - Starting data migration process.
+2025-10-08 15:20:46,570 - CRITICAL - load_data - Database error during migration: connection failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/load_data.py", line 26, in migrate_data
+    psycopg.connect(**dsl, row_factory=dict_row) as pg_conn:
+  File "/usr/local/lib/python3.10/site-packages/psycopg/connection.py", line 748, in connect
+    raise last_ex.with_traceback(None)
+psycopg.OperationalError: connection failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+2025-10-08 15:20:46,571 - WARNING - load_data - PostgreSQL transaction has been rolled back due to a database error.
+2025-10-08 15:20:46,571 - INFO - load_data - Data migration process finished. Database connections are closed.
+2025-10-08 15:22:19,259 - INFO - load_data - Starting data migration process.
+2025-10-08 15:22:19,307 - CRITICAL - load_data - Database error during migration: connection failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/load_data.py", line 26, in migrate_data
+    psycopg.connect(**dsl, row_factory=dict_row) as pg_conn:
+  File "/usr/local/lib/python3.10/site-packages/psycopg/connection.py", line 748, in connect
+    raise last_ex.with_traceback(None)
+psycopg.OperationalError: connection failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+2025-10-08 15:22:19,308 - WARNING - load_data - PostgreSQL transaction has been rolled back due to a database error.
+2025-10-08 15:22:19,308 - INFO - load_data - Data migration process finished. Database connections are closed.
+2025-10-08 20:34:51,597 - INFO - load_data - Starting data migration process.
+2025-10-08 20:34:51,702 - INFO - load_data - Successfully connected to databases.
+2025-10-08 20:34:51,795 - INFO - migrator - --- Processing SQLite table 'genre' -> PG table 'content.genre' ---
+2025-10-08 20:34:51,796 - INFO - etl - Extracting data from SQLite table: genre
+2025-10-08 20:34:51,822 - INFO - etl - Loading batch of 26 items into PostgreSQL table: content.genre
+2025-10-08 20:34:51,984 - ERROR - etl - PostgreSQL error loading data into content.genre. Query: INSERT INTO "content"."genre" ("id", "name", "description", "created", "modified") VALUES (%s, %s, %s, %s, %s) ON CONFLICT ("id") DO NOTHING... Error: relation "content.genre" does not exist
+LINE 1: INSERT INTO "content"."genre" ("id", "name", "description", ...
+                    ^
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/etl.py", line 60, in load_to_postgres
+    pg_cursor.executemany(query, batch_as_tuples)
+  File "/usr/local/lib/python3.10/site-packages/psycopg/cursor.py", line 767, in executemany
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "content.genre" does not exist
+LINE 1: INSERT INTO "content"."genre" ("id", "name", "description", ...
+                    ^
+2025-10-08 20:34:51,986 - CRITICAL - load_data - Database error during migration: relation "content.genre" does not exist
+LINE 1: INSERT INTO "content"."genre" ("id", "name", "description", ...
+                    ^
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/load_data.py", line 32, in migrate_data
+    process_table(table_name, sqlite_conn, pg_conn)
+  File "/app/sqlite_to_postgres/migrator.py", line 37, in process_table
+    load_to_postgres(
+  File "/app/sqlite_to_postgres/etl.py", line 60, in load_to_postgres
+    pg_cursor.executemany(query, batch_as_tuples)
+  File "/usr/local/lib/python3.10/site-packages/psycopg/cursor.py", line 767, in executemany
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "content.genre" does not exist
+LINE 1: INSERT INTO "content"."genre" ("id", "name", "description", ...
+                    ^
+2025-10-08 20:34:51,988 - WARNING - load_data - PostgreSQL transaction has been rolled back due to a database error.
+2025-10-08 20:34:51,989 - INFO - load_data - Data migration process finished. Database connections are closed.
+2025-10-09 18:26:31,303 - INFO - load_data - Starting data migration process.
+2025-10-09 18:26:31,332 - INFO - load_data - Successfully connected to databases.
+2025-10-09 18:26:31,333 - INFO - migrator - --- Processing SQLite table 'genre' -> PG table 'content.genre' ---
+2025-10-09 18:26:31,334 - INFO - etl - Extracting data from SQLite table: genre
+2025-10-09 18:26:31,343 - INFO - etl - Loading batch of 26 items into PostgreSQL table: content.genre
+2025-10-09 18:26:31,355 - ERROR - etl - PostgreSQL error loading data into content.genre. Query: INSERT INTO "content"."genre" ("id", "name", "description", "created", "modified") VALUES (%s, %s, %s, %s, %s) ON CONFLICT ("id") DO NOTHING... Error: relation "content.genre" does not exist
+LINE 1: INSERT INTO "content"."genre" ("id", "name", "description", ...
+                    ^
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/etl.py", line 60, in load_to_postgres
+    pg_cursor.executemany(query, batch_as_tuples)
+  File "/usr/local/lib/python3.10/site-packages/psycopg/cursor.py", line 767, in executemany
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "content.genre" does not exist
+LINE 1: INSERT INTO "content"."genre" ("id", "name", "description", ...
+                    ^
+2025-10-09 18:26:31,359 - CRITICAL - load_data - Database error during migration: relation "content.genre" does not exist
+LINE 1: INSERT INTO "content"."genre" ("id", "name", "description", ...
+                    ^
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/load_data.py", line 32, in migrate_data
+    process_table(table_name, sqlite_conn, pg_conn)
+  File "/app/sqlite_to_postgres/migrator.py", line 37, in process_table
+    load_to_postgres(
+  File "/app/sqlite_to_postgres/etl.py", line 60, in load_to_postgres
+    pg_cursor.executemany(query, batch_as_tuples)
+  File "/usr/local/lib/python3.10/site-packages/psycopg/cursor.py", line 767, in executemany
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "content.genre" does not exist
+LINE 1: INSERT INTO "content"."genre" ("id", "name", "description", ...
+                    ^
+2025-10-09 18:26:31,360 - WARNING - load_data - PostgreSQL transaction has been rolled back due to a database error.
+2025-10-09 18:26:31,361 - INFO - load_data - Data migration process finished. Database connections are closed.
+2025-10-09 18:49:07,804 - INFO - load_data - Starting data migration process.
+2025-10-09 18:49:07,917 - CRITICAL - load_data - Database error during migration: connection failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/load_data.py", line 26, in migrate_data
+    psycopg.connect(**dsl, row_factory=dict_row) as pg_conn:
+  File "/usr/local/lib/python3.10/site-packages/psycopg/connection.py", line 748, in connect
+    raise last_ex.with_traceback(None)
+psycopg.OperationalError: connection failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+2025-10-09 18:49:07,919 - WARNING - load_data - PostgreSQL transaction has been rolled back due to a database error.
+2025-10-09 18:49:07,920 - INFO - load_data - Data migration process finished. Database connections are closed.
+2025-10-09 18:55:34,773 - INFO - load_data - Starting data migration process.
+2025-10-09 18:55:34,934 - INFO - load_data - Successfully connected to databases.
+2025-10-09 18:55:34,935 - INFO - migrator - --- Processing SQLite table 'genre' -> PG table 'genre' ---
+2025-10-09 18:55:34,936 - INFO - etl - Extracting data from SQLite table: genre
+2025-10-09 18:55:34,974 - INFO - etl - Loading batch of 26 items into PostgreSQL table: genre
+2025-10-09 18:55:34,982 - ERROR - etl - PostgreSQL error loading data into genre. Query: INSERT INTO "genre" ("id", "name", "description", "created", "modified") VALUES (%s, %s, %s, %s, %s) ON CONFLICT ("id") DO NOTHING... Error: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/etl.py", line 60, in load_to_postgres
+    pg_cursor.executemany(query, batch_as_tuples)
+  File "/usr/local/lib/python3.10/site-packages/psycopg/cursor.py", line 767, in executemany
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+2025-10-09 18:55:34,984 - CRITICAL - load_data - Database error during migration: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/load_data.py", line 32, in migrate_data
+    process_table(table_name, sqlite_conn, pg_conn)
+  File "/app/sqlite_to_postgres/migrator.py", line 37, in process_table
+    load_to_postgres(
+  File "/app/sqlite_to_postgres/etl.py", line 60, in load_to_postgres
+    pg_cursor.executemany(query, batch_as_tuples)
+  File "/usr/local/lib/python3.10/site-packages/psycopg/cursor.py", line 767, in executemany
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+2025-10-09 18:55:34,986 - WARNING - load_data - PostgreSQL transaction has been rolled back due to a database error.
+2025-10-09 18:55:34,988 - INFO - load_data - Data migration process finished. Database connections are closed.
+2025-10-09 19:03:31,257 - INFO - load_data - Starting data migration process.
+2025-10-09 19:03:31,343 - CRITICAL - load_data - Database error during migration: connection failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/load_data.py", line 26, in migrate_data
+    psycopg.connect(**dsl, row_factory=dict_row) as pg_conn:
+  File "/usr/local/lib/python3.10/site-packages/psycopg/connection.py", line 748, in connect
+    raise last_ex.with_traceback(None)
+psycopg.OperationalError: connection failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+2025-10-09 19:03:31,345 - WARNING - load_data - PostgreSQL transaction has been rolled back due to a database error.
+2025-10-09 19:03:31,345 - INFO - load_data - Data migration process finished. Database connections are closed.
+2025-10-09 19:38:09,562 - INFO - load_data - Starting data migration process.
+2025-10-09 19:38:09,674 - INFO - load_data - Successfully connected to databases.
+2025-10-09 19:38:09,674 - INFO - migrator - --- Processing SQLite table 'genre' -> PG table 'genre' ---
+2025-10-09 19:38:09,676 - INFO - etl - Extracting data from SQLite table: genre
+2025-10-09 19:38:09,709 - INFO - etl - Loading batch of 26 items into PostgreSQL table: genre
+2025-10-09 19:38:09,717 - ERROR - etl - PostgreSQL error loading data into genre. Query: INSERT INTO "genre" ("id", "name", "description", "created", "modified") VALUES (%s, %s, %s, %s, %s) ON CONFLICT ("id") DO NOTHING... Error: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/etl.py", line 60, in load_to_postgres
+    pg_cursor.executemany(query, batch_as_tuples)
+  File "/usr/local/lib/python3.10/site-packages/psycopg/cursor.py", line 767, in executemany
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+2025-10-09 19:38:09,720 - CRITICAL - load_data - Database error during migration: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/load_data.py", line 32, in migrate_data
+    process_table(table_name, sqlite_conn, pg_conn)
+  File "/app/sqlite_to_postgres/migrator.py", line 37, in process_table
+    load_to_postgres(
+  File "/app/sqlite_to_postgres/etl.py", line 60, in load_to_postgres
+    pg_cursor.executemany(query, batch_as_tuples)
+  File "/usr/local/lib/python3.10/site-packages/psycopg/cursor.py", line 767, in executemany
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+2025-10-09 19:38:09,721 - WARNING - load_data - PostgreSQL transaction has been rolled back due to a database error.
+2025-10-09 19:38:09,723 - INFO - load_data - Data migration process finished. Database connections are closed.
+2025-10-09 19:43:48,907 - INFO - load_data - Starting data migration process.
+2025-10-09 19:43:48,921 - INFO - load_data - Successfully connected to databases.
+2025-10-09 19:43:48,921 - INFO - migrator - --- Processing SQLite table 'genre' -> PG table 'genre' ---
+2025-10-09 19:43:48,921 - INFO - etl - Extracting data from SQLite table: genre
+2025-10-09 19:43:48,925 - INFO - etl - Loading batch of 26 items into PostgreSQL table: genre
+2025-10-09 19:43:48,929 - ERROR - etl - PostgreSQL error loading data into genre. Query: INSERT INTO "genre" ("id", "name", "description", "created", "modified") VALUES (%s, %s, %s, %s, %s) ON CONFLICT ("id") DO NOTHING... Error: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/etl.py", line 60, in load_to_postgres
+    pg_cursor.executemany(query, batch_as_tuples)
+  File "/usr/local/lib/python3.10/site-packages/psycopg/cursor.py", line 767, in executemany
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+2025-10-09 19:43:48,930 - CRITICAL - load_data - Database error during migration: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/load_data.py", line 32, in migrate_data
+    process_table(table_name, sqlite_conn, pg_conn)
+  File "/app/sqlite_to_postgres/migrator.py", line 37, in process_table
+    load_to_postgres(
+  File "/app/sqlite_to_postgres/etl.py", line 60, in load_to_postgres
+    pg_cursor.executemany(query, batch_as_tuples)
+  File "/usr/local/lib/python3.10/site-packages/psycopg/cursor.py", line 767, in executemany
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+2025-10-09 19:43:48,931 - WARNING - load_data - PostgreSQL transaction has been rolled back due to a database error.
+2025-10-09 19:43:48,932 - INFO - load_data - Data migration process finished. Database connections are closed.
+2025-10-09 20:29:09,964 - INFO - load_data - Starting data migration process.
+2025-10-09 20:29:09,998 - INFO - load_data - Successfully connected to databases.
+2025-10-09 20:29:09,999 - INFO - migrator - --- Processing SQLite table 'genre' -> PG table 'genre' ---
+2025-10-09 20:29:09,999 - INFO - etl - Extracting data from SQLite table: genre
+2025-10-09 20:29:10,008 - INFO - etl - Loading batch of 26 items into PostgreSQL table: genre
+2025-10-09 20:29:10,017 - ERROR - etl - PostgreSQL error loading data into genre. Query: INSERT INTO "genre" ("id", "name", "description", "created", "modified") VALUES (%s, %s, %s, %s, %s) ON CONFLICT ("id") DO NOTHING... Error: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/etl.py", line 60, in load_to_postgres
+    pg_cursor.executemany(query, batch_as_tuples)
+  File "/usr/local/lib/python3.10/site-packages/psycopg/cursor.py", line 767, in executemany
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+2025-10-09 20:29:10,020 - CRITICAL - load_data - Database error during migration: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/load_data.py", line 32, in migrate_data
+    process_table(table_name, sqlite_conn, pg_conn)
+  File "/app/sqlite_to_postgres/migrator.py", line 37, in process_table
+    load_to_postgres(
+  File "/app/sqlite_to_postgres/etl.py", line 60, in load_to_postgres
+    pg_cursor.executemany(query, batch_as_tuples)
+  File "/usr/local/lib/python3.10/site-packages/psycopg/cursor.py", line 767, in executemany
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+2025-10-09 20:29:10,021 - WARNING - load_data - PostgreSQL transaction has been rolled back due to a database error.
+2025-10-09 20:29:10,022 - INFO - load_data - Data migration process finished. Database connections are closed.
+2025-10-10 11:59:08,493 - INFO - load_data - Starting data migration process.
+2025-10-10 11:59:08,516 - INFO - load_data - Successfully connected to databases.
+2025-10-10 11:59:08,517 - INFO - migrator - --- Processing SQLite table 'genre' -> PG table 'genre' ---
+2025-10-10 11:59:08,517 - INFO - etl - Extracting data from SQLite table: genre
+2025-10-10 11:59:08,522 - INFO - etl - Loading batch of 26 items into PostgreSQL table: genre
+2025-10-10 11:59:08,531 - ERROR - etl - PostgreSQL error loading data into genre. Query: INSERT INTO "genre" ("id", "name", "description", "created", "modified") VALUES (%s, %s, %s, %s, %s) ON CONFLICT ("id") DO NOTHING... Error: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/etl.py", line 60, in load_to_postgres
+    pg_cursor.executemany(query, batch_as_tuples)
+  File "/usr/local/lib/python3.10/site-packages/psycopg/cursor.py", line 767, in executemany
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+2025-10-10 11:59:08,533 - CRITICAL - load_data - Database error during migration: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/load_data.py", line 32, in migrate_data
+    process_table(table_name, sqlite_conn, pg_conn)
+  File "/app/sqlite_to_postgres/migrator.py", line 37, in process_table
+    load_to_postgres(
+  File "/app/sqlite_to_postgres/etl.py", line 60, in load_to_postgres
+    pg_cursor.executemany(query, batch_as_tuples)
+  File "/usr/local/lib/python3.10/site-packages/psycopg/cursor.py", line 767, in executemany
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+2025-10-10 11:59:08,535 - WARNING - load_data - PostgreSQL transaction has been rolled back due to a database error.
+2025-10-10 11:59:08,535 - INFO - load_data - Data migration process finished. Database connections are closed.
+2025-10-10 17:47:00,312 - INFO - load_data - Starting data migration process.
+2025-10-10 17:47:00,333 - INFO - load_data - Successfully connected to databases.
+2025-10-10 17:47:00,334 - INFO - migrator - --- Processing SQLite table 'genre' -> PG table 'genre' ---
+2025-10-10 17:47:00,334 - INFO - etl - Extracting data from SQLite table: genre
+2025-10-10 17:47:00,341 - INFO - etl - Loading batch of 26 items into PostgreSQL table: genre
+2025-10-10 17:47:00,354 - ERROR - etl - PostgreSQL error loading data into genre. Query: INSERT INTO "genre" ("id", "name", "description", "created", "modified") VALUES (%s, %s, %s, %s, %s) ON CONFLICT ("id") DO NOTHING... Error: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/etl.py", line 60, in load_to_postgres
+    pg_cursor.executemany(query, batch_as_tuples)
+  File "/usr/local/lib/python3.10/site-packages/psycopg/cursor.py", line 767, in executemany
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+2025-10-10 17:47:00,357 - CRITICAL - load_data - Database error during migration: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+Traceback (most recent call last):
+  File "/app/sqlite_to_postgres/load_data.py", line 32, in migrate_data
+    process_table(table_name, sqlite_conn, pg_conn)
+  File "/app/sqlite_to_postgres/migrator.py", line 37, in process_table
+    load_to_postgres(
+  File "/app/sqlite_to_postgres/etl.py", line 60, in load_to_postgres
+    pg_cursor.executemany(query, batch_as_tuples)
+  File "/usr/local/lib/python3.10/site-packages/psycopg/cursor.py", line 767, in executemany
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "genre" does not exist
+LINE 1: INSERT INTO "genre" ("id", "name", "description", "created",...
+                    ^
+2025-10-10 17:47:00,359 - WARNING - load_data - PostgreSQL transaction has been rolled back due to a database error.
+2025-10-10 17:47:00,359 - INFO - load_data - Data migration process finished. Database connections are closed.

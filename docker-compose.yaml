@@ -1,12 +1,13 @@
 services:
   db:
-    image: postgres:13-alpine
-    container_name: movies_db
+    image: postgres:16.0-alpine
     volumes:
-      - ./sqlite_to_postgres/movies_database.ddl:/docker-entrypoint-initdb.d/init.sql
       - postgres_data:/var/lib/postgresql/data/
+      - ./sqlite_to_postgres/movies_database.ddl:/docker-entrypoint-initdb.d/init.sql
     env_file:
       - ./.env
+    ports:
+      - "5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
@@ -51,8 +52,6 @@ services:
     env_file:
       - ./.env
     depends_on:
-      web:
-        condition: service_started
       db:
         condition: service_healthy
 

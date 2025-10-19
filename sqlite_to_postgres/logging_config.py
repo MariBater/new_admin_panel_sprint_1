@@ -1,5 +1,6 @@
 import logging
 import sys
+from .settings import LOG_FILE_PATH
 
 
 def setup_logging():
@@ -8,7 +9,7 @@ def setup_logging():
         level=logging.INFO,
         format='%(asctime)s - %(levelname)s - %(module)s - %(message)s',
         handlers=[
-            logging.FileHandler("/app/logs/migration.log", mode='a', encoding='utf-8'),
+            logging.FileHandler(LOG_FILE_PATH, mode='a', encoding='utf-8'),
             logging.StreamHandler(sys.stderr)  # Use stderr for logs, which is conventional
         ]
     )

@@ -22,6 +22,11 @@ dsl = {
 BASE_DIR = Path(__file__).resolve().parent.parent
 SQLITE_DB_PATH = BASE_DIR / 'sqlite_to_postgres/db.sqlite'
 
+# --- Logging settings ---
+LOG_DIR = BASE_DIR / 'logs'
+LOG_FILE_PATH = LOG_DIR / 'migration.log'
+LOG_DIR.mkdir(parents=True, exist_ok=True) # Ensure the log directory exists
+
 # --- ETL settings ---
 BATCH_SIZE = 100
 

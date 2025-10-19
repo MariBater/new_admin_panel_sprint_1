@@ -69,6 +69,7 @@ class GenreFilmWork(UUIDMixin):
     class Meta:
         db_table = "content.genre_film_work"
         verbose_name = _('genre of film work')
+        unique_together = ('film_work', 'genre')
         verbose_name_plural = _('genres of film works')
 
 class Person(UUIDMixin, TimeStampedMixin):

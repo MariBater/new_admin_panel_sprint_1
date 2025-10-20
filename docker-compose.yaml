@@ -1,0 +1,67 @@
+services:
+  db:
+    image: postgres:16.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+      - ./sqlite_to_postgres/movies_database.ddl:/docker-entrypoint-initdb.d/init.sql
+    env_file:
+      - ./.env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  nginx:
+    build: ./nginx
+    container_name: movies_nginx
+    ports:
+      - "80:80"
+    volumes:
+      - static_volume:/var/www/static
+      - media_volume:/var/www/media
+      - uwsgi_socket:/var/run/uwsgi
+    depends_on:
+      - web
+
+  web:
+    build:
+      context: .
+      dockerfile: app/Dockerfile
+    image: new_admin_panel_sprint-app
+    container_name: movies_app
+    command: ["/app/wait-for-postgres.sh", "db", "/app/run_uwsgi.sh"]
+    env_file:
+      - ./.env
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+      - uwsgi_socket:/var/run/uwsgi
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "uwsgi", "--http-socket", ":8000", "--die-on-term", "--check-static", "/app"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  etl:
+    image: new_admin_panel_sprint-app
+    container_name: movies_etl
+    command: ["/app/wait-for-postgres.sh", "db", "python", "-m", "sqlite_to_postgres.load_data"]
+    volumes:
+      - ./logs:/app/logs
+    env_file:
+      - ./.env
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
+  uwsgi_socket:
+  logs:

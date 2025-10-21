@@ -1,0 +1,281 @@
+{
+	"id": "796fbb93-931d-421b-9a98-44e3fe75d85b",
+	"name": "ETLTests",
+	"timestamp": "2025-10-21T10:43:47.969Z",
+	"collection_id": "46617576-e41933cb-1f71-4737-9055-28f39c033ad6",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 14,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2025-10-21T10:43:46.883Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "8df0e395-b670-440c-8a50-ab0c606eea89",
+			"name": "Проверка количества элементов",
+			"url": "http://localhost:9201/movies/_search",
+			"time": 48,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Success answer": true,
+				"Compare number of records": true
+			},
+			"testPassFailCounts": {
+				"Success answer": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Compare number of records": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				48
+			],
+			"allTests": [
+				{
+					"Success answer": true,
+					"Compare number of records": true
+				}
+			]
+		},
+		{
+			"id": "4d7108b9-4852-43e6-bcf4-45e6d10840ed",
+			"name": "Запрос на поиск N/A элементов",
+			"url": "http://localhost:9201/movies/_search",
+			"time": 22,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Success answer": true,
+				"Search for N/A records": true
+			},
+			"testPassFailCounts": {
+				"Success answer": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Search for N/A records": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				22
+			],
+			"allTests": [
+				{
+					"Success answer": true,
+					"Search for N/A records": true
+				}
+			]
+		},
+		{
+			"id": "8e83d09a-4016-4fe9-9d0e-05503c9ede9b",
+			"name": "Запрос на поиск данных по слову camp",
+			"url": "http://localhost:9201/movies/_search",
+			"time": 21,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Success answer": true,
+				"Compare number of records": true
+			},
+			"testPassFailCounts": {
+				"Success answer": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Compare number of records": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				21
+			],
+			"allTests": [
+				{
+					"Success answer": true,
+					"Compare number of records": true
+				}
+			]
+		},
+		{
+			"id": "60b6a783-4c0b-4690-b72e-6d72a6db39a1",
+			"name": "Запрос данных по актеру",
+			"url": "http://localhost:9201/movies/_search",
+			"time": 9,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Success answer": true,
+				"Compare number of records": true
+			},
+			"testPassFailCounts": {
+				"Success answer": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Compare number of records": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				9
+			],
+			"allTests": [
+				{
+					"Success answer": true,
+					"Compare number of records": true
+				}
+			]
+		},
+		{
+			"id": "c48ae218-ad3b-4e2a-962f-f4a5e5ffd93f",
+			"name": "Запрос данных с одним сценаристом",
+			"url": "http://localhost:9201/movies/_search",
+			"time": 11,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Success answer": true,
+				"Compare writers_names": true
+			},
+			"testPassFailCounts": {
+				"Success answer": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Compare writers_names": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"Success answer": true,
+					"Compare writers_names": true
+				}
+			]
+		},
+		{
+			"id": "0aa95a9b-2ef6-4862-9275-8086bec1f6e6",
+			"name": "Запрос данных без режиссера",
+			"url": "http://localhost:9201/movies/_search",
+			"time": 8,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Success answer": true,
+				"Compare director": true
+			},
+			"testPassFailCounts": {
+				"Success answer": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Compare director": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"Success answer": true,
+					"Compare director": true
+				}
+			]
+		},
+		{
+			"id": "21f4e747-e558-47b7-a91f-e56a18c349b2",
+			"name": "Проверка количества жанров",
+			"url": "http://localhost:9201/movies/_search",
+			"time": 10,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Success answer": true,
+				"Compare number of genres": true
+			},
+			"testPassFailCounts": {
+				"Success answer": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Compare number of genres": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				10
+			],
+			"allTests": [
+				{
+					"Success answer": true,
+					"Compare number of genres": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 129,
+	"collection": {
+		"requests": [
+			{
+				"id": "8df0e395-b670-440c-8a50-ab0c606eea89",
+				"method": "GET"
+			},
+			{
+				"id": "4d7108b9-4852-43e6-bcf4-45e6d10840ed",
+				"method": "GET"
+			},
+			{
+				"id": "8e83d09a-4016-4fe9-9d0e-05503c9ede9b",
+				"method": "GET"
+			},
+			{
+				"id": "60b6a783-4c0b-4690-b72e-6d72a6db39a1",
+				"method": "GET"
+			},
+			{
+				"id": "c48ae218-ad3b-4e2a-962f-f4a5e5ffd93f",
+				"method": "GET"
+			},
+			{
+				"id": "0aa95a9b-2ef6-4862-9275-8086bec1f6e6",
+				"method": "GET"
+			},
+			{
+				"id": "21f4e747-e558-47b7-a91f-e56a18c349b2",
+				"method": "GET"
+			}
+		]
+	}
+}

@@ -1,11 +1,29 @@
-.env
-
-# Папка с логами
-logs/
-
-# Виртуальное окружение
-venv/
-
 # Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+venv/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# IDE and editor files
+.idea/
+.vscode/
+
+# Log files
+logs/
+*.log
+
+# SQLite database
+db.sqlite
+db.sqlite3
+
+# Django specific
+staticfiles/
+media/

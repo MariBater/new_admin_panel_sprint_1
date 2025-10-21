@@ -6,7 +6,8 @@ from psycopg.rows import dict_row
 
 from .logging_config import setup_logging
 from .migrator import process_table
-from .settings import MIGRATION_ORDER, SQLITE_DB_PATH, dsl, BASE_DIR
+from .es_loader import ElasticsearchLoader
+from .settings import MIGRATION_ORDER, SQLITE_DB_PATH, dsl, BASE_DIR, BATCH_SIZE
 
 # Настраиваем логирование через отдельный модуль
 setup_logging()
@@ -25,6 +26,18 @@ def setup_postgres_schema(pg_conn):
     with open(DB_SCHEMA_PATH, 'r') as f, pg_conn.cursor() as cursor:
         cursor.execute(f.read())
     logger.info("PostgreSQL schema setup complete.")
+
+def get_all_film_work_ids(pg_conn):
+    """Fetches all film_work IDs from PostgreSQL in batches."""
+    logger.info("Fetching all film_work IDs from PostgreSQL for initial indexing...")
+    with pg_conn.cursor() as cursor:
+        cursor.execute("SELECT id FROM content.film_work ORDER BY id;")
+        while True:
+            batch = cursor.fetchmany(BATCH_SIZE)
+            if not batch:
+                break
+            # Yield a tuple of IDs for the batch
+            yield tuple(row['id'] for row in batch)
 
 
 def migrate_data():
@@ -55,7 +68,19 @@ def migrate_data():
                 for table_name in MIGRATION_ORDER:
                     process_table(table_name, sqlite_conn, pg_conn)
             logger.info("Full data migration transaction committed successfully.")
-            logger.info('🎉 Данные успешно перенесены и протестированы для всех сконфигурированных таблиц!')
+
+            # 3. Index data into Elasticsearch
+            logger.info("Starting Elasticsearch indexing...")
+            es_loader = ElasticsearchLoader()
+            total_indexed_docs = 0
+            for fw_ids_batch in get_all_film_work_ids(pg_conn):
+                if not fw_ids_batch:
+                    continue
+                enriched_data = es_loader.get_enriched_data_from_pg(fw_ids_batch)
+                indexed_count = es_loader.bulk_index_to_es(enriched_data)
+                total_indexed_docs += indexed_count
+            
+            logger.info(f"🎉 Successfully migrated data to PostgreSQL and indexed {total_indexed_docs} documents into Elasticsearch!")
 
     except (sqlite3.Error, psycopg.Error) as e:
         logger.critical(f"Database error during migration: {e}", exc_info=True)

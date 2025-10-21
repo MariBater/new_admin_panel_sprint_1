@@ -16,8 +16,14 @@ dsl = {
     'user': os.getenv('POSTGRES_USER'),
     'password': os.getenv('POSTGRES_PASSWORD'),
     'host': os.getenv('DB_HOST'),
-    'port': os.getenv('DB_PORT'),
+    'port': int(os.getenv('DB_PORT', 5432)),
 }
+
+# --- Elasticsearch settings ---
+ES_HOST = os.getenv('ES_HOST', 'elasticsearch') # Используем имя сервиса Docker Compose
+ES_PORT = os.getenv('ES_PORT', '9200')
+ES_INDEX_MOVIES = 'movies'
+ES_INDEX_PERSONS = 'persons'
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SQLITE_DB_PATH = BASE_DIR / 'sqlite_to_postgres/db.sqlite'
@@ -29,6 +35,7 @@ LOG_DIR.mkdir(parents=True, exist_ok=True) # Ensure the log directory exists
 
 # --- ETL settings ---
 BATCH_SIZE = 100
+ETL_SLEEP_INTERVAL = int(os.getenv('ETL_SLEEP_INTERVAL', 60)) # в секундах
 
 # --- Migration configuration ---
 

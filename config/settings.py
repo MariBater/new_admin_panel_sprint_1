@@ -38,6 +38,12 @@ ALLOWED_HOSTS = [
     'localhost',
 ]
 
+# Elasticsearch settings for Django-DSL
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': [os.environ.get('ES_HOST', 'elasticsearch') + ':' + os.environ.get('ES_PORT', '9200')],
+    }
+}
 
 # Application definition
 

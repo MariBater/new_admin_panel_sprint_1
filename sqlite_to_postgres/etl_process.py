@@ -9,7 +9,7 @@ from psycopg.rows import dict_row
 from .es_loader import ElasticsearchLoader
 from .decorators import backoff
 from .logging_config import setup_logging
-from .settings import BATCH_SIZE, dsl, ETL_SLEEP_INTERVAL
+from .settings import BATCH_SIZE, ETL_SLEEP_INTERVAL
 from .state import JsonFileStorage, State
 
 setup_logging()
@@ -37,7 +37,7 @@ class ETLProcess:
         """
         with self.pg_conn.cursor() as cursor:
             cursor.execute(query, (last_modified,))
-            updated_ids = {row[0] for row in cursor.fetchall()}
+            updated_ids = {row['id'] for row in cursor.fetchall()}
             logger.info(f"Found {len(updated_ids)} updated records in '{table}' table.")
             return updated_ids
 
@@ -46,7 +46,7 @@ class ETLProcess:
         if not ids:
             return set()
         cursor.execute(query, (list(ids),))
-        return {row[0] for row in cursor.fetchall()}
+        return {row['film_work_id'] for row in cursor.fetchall()}
 
     def _get_film_works_by_related_ids(
         self, person_ids: Set[str], genre_ids: Set[str]
@@ -114,15 +114,19 @@ class ETLProcess:
 
 
 @backoff(start_sleep_time=1, factor=2, border_sleep_time=60)
-def main():
+def main(pg_dsl: dict):
     """Основная функция, запускающая ETL-процесс в бесконечном цикле."""
     storage = JsonFileStorage("/app/state/etl_state.json")
     state = State(storage)
-    es_loader = ElasticsearchLoader()
+    es_loader = ElasticsearchLoader(pg_dsl)
+    if not es_loader.es_client:
+        logger.critical("Failed to connect to Elasticsearch. ETL process cannot start.")
+        # В реальной системе здесь может быть более сложная логика, например, выход с ошибкой.
+        return
  
     while True:
         try:
-            with psycopg.connect(**dsl, row_factory=dict_row) as pg_conn:
+            with psycopg.connect(**pg_dsl, row_factory=dict_row) as pg_conn:
                 logger.info("Successfully connected to PostgreSQL.")
                 
                 # Создаем экземпляр ETLProcess с активным соединением
@@ -139,4 +143,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    from .settings import get_pg_dsl
+    main(get_pg_dsl())

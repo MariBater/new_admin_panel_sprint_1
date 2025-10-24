@@ -5,17 +5,15 @@ from typing import Dict, List, Tuple
 import psycopg
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk, BulkIndexError
-
 from .decorators import backoff
-from .settings import (
-    dsl, ES_HOST, ES_PORT, ES_INDEX_MOVIES, ES_INDEX_PERSONS, BATCH_SIZE
-)
+from .settings import ES_HOST, ES_PORT, ES_INDEX_MOVIES, BATCH_SIZE
 
 logger = logging.getLogger(__name__)
 
 
 class ElasticsearchLoader:
-    def __init__(self):
+    def __init__(self, pg_dsl: dict):
+        self.pg_dsl = pg_dsl
         self.es_client = None
         self.es_client = self._connect_to_elasticsearch()
 
@@ -122,7 +120,7 @@ class ElasticsearchLoader:
             LEFT JOIN content.genre g ON g.id = gfw.genre_id
             WHERE fw.id = ANY(%s);
         """
-        with psycopg.connect(**dsl) as pg_conn, pg_conn.cursor() as cursor:
+        with psycopg.connect(**self.pg_dsl) as pg_conn, pg_conn.cursor() as cursor:
             cursor.execute(query, [list(film_work_ids)])
             rows = cursor.fetchall()
 

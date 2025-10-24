@@ -2,22 +2,19 @@ import os
 from dataclasses import fields
 from pathlib import Path
 
-from dotenv import load_dotenv
 
-from .data_models import (FilmWork, Genre, GenreFilmWork, Person,
-                          PersonFilmWork)
-
-# Load environment variables
-load_dotenv()
+from .data_models import FilmWork, Genre, GenreFilmWork, Person, PersonFilmWork
 
 # --- Database connection settings ---
-dsl = {
-    'dbname': os.getenv('POSTGRES_DB'),
-    'user': os.getenv('POSTGRES_USER'),
-    'password': os.getenv('POSTGRES_PASSWORD'),
-    'host': os.getenv('DB_HOST'),
-    'port': int(os.getenv('DB_PORT', 5432)),
-}
+def get_pg_dsl():
+    """Returns PostgreSQL connection details from environment variables."""
+    return {
+        'dbname': os.getenv('POSTGRES_DB'),
+        'user': os.getenv('POSTGRES_USER'),
+        'password': os.getenv('POSTGRES_PASSWORD'),
+        'host': os.getenv('POSTGRES_HOST', 'db'),
+        'port': int(os.getenv('POSTGRES_PORT', 5432)),
+    }
 
 # --- Elasticsearch settings ---
 ES_HOST = os.getenv('ES_HOST', 'elasticsearch') # Используем имя сервиса Docker Compose
@@ -68,8 +65,8 @@ DATABASES = {
         'NAME': os.environ.get('POSTGRES_DB'),
         'USER': os.environ.get('POSTGRES_USER'),
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': os.environ.get('DB_HOST'), # <-- Самое важное изменение
-        'PORT': os.environ.get('DB_PORT'),
+        'HOST': os.environ.get('POSTGRES_HOST'),
+        'PORT': os.environ.get('POSTGRES_PORT'),
     }
 }
 

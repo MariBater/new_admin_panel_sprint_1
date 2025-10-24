@@ -14,9 +14,6 @@ import os
 from pathlib import Path
 from split_settings.tools import include
 from dotenv import load_dotenv
-
-load_dotenv() 
-load_dotenv(dotenv_path='.env.local')
 include(
     'components/database.py',
 ) 
@@ -41,7 +38,7 @@ ALLOWED_HOSTS = [
 # Elasticsearch settings for Django-DSL
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': [os.environ.get('ES_HOST', 'elasticsearch') + ':' + os.environ.get('ES_PORT', '9200')],
+        'hosts': [f"{os.environ.get('ES_HOST', 'elasticsearch')}:{os.environ.get('ES_PORT', '9200')}"],
     }
 }
 
@@ -142,7 +139,7 @@ LOGGING = {
     },
     'loggers': {
         'django.db.backends': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'handlers': ['debug-console'],
             'propagate': False,
         }

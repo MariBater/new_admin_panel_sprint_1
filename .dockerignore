@@ -1,0 +1,11 @@
+**/__pycache__
+**/*.pyc
+
+.dockerignore
+.env
+.env.local
+.git
+.gitignore
+
+postgres_data/
+es_data/

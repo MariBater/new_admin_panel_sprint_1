@@ -45,9 +45,11 @@ services:
     build:
       context: .
       dockerfile: app/Dockerfile
-    image: new_admin_panel_sprint-app
+    image: movies-app
     container_name: movies_app
-    command: ["/app/wait-for-postgres.sh", "db", "/app/run_uwsgi.sh"]
+    user: "appuser:appuser"
+    entrypoint: ["/app/docker-entrypoint.sh"]
+    command: ["/app/run_uwsgi.sh"]
     env_file:
       - ./.env
     volumes:
@@ -67,9 +69,11 @@ services:
       retries: 3
 
   etl:
-    image: new_admin_panel_sprint-app
+    image: movies-app
     container_name: movies_etl
-    command: ["/app/wait-for-postgres.sh", "db", "python", "-m", "sqlite_to_postgres.etl_process"]
+    user: "appuser:appuser"
+    entrypoint: ["/app/docker-entrypoint.sh"]
+    command: ["python", "-m", "sqlite_to_postgres.run_etl"]
     volumes:
       - etl_state:/app/state
       - logs:/app/logs
@@ -80,6 +84,7 @@ services:
         condition: service_healthy
       elasticsearch:
         condition: service_healthy
+    restart: on-failure
 
 volumes:
   postgres_data:

@@ -1,7 +1,7 @@
 {
-	"id": "796fbb93-931d-421b-9a98-44e3fe75d85b",
+	"id": "90bbf1cd-66e7-47d9-b9d0-de9d19b0a9a5",
 	"name": "ETLTests",
-	"timestamp": "2025-10-21T10:43:47.969Z",
+	"timestamp": "2025-10-24T17:20:27.548Z",
 	"collection_id": "46617576-e41933cb-1f71-4737-9055-28f39c033ad6",
 	"folder_id": 0,
 	"environment_id": "0",
@@ -9,14 +9,14 @@
 	"delay": 0,
 	"persist": true,
 	"status": "finished",
-	"startedAt": "2025-10-21T10:43:46.883Z",
+	"startedAt": "2025-10-24T17:20:23.922Z",
 	"totalFail": 0,
 	"results": [
 		{
 			"id": "8df0e395-b670-440c-8a50-ab0c606eea89",
 			"name": "Проверка количества элементов",
 			"url": "http://localhost:9201/movies/_search",
-			"time": 48,
+			"time": 437,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -36,7 +36,7 @@
 				}
 			},
 			"times": [
-				48
+				437
 			],
 			"allTests": [
 				{
@@ -49,7 +49,7 @@
 			"id": "4d7108b9-4852-43e6-bcf4-45e6d10840ed",
 			"name": "Запрос на поиск N/A элементов",
 			"url": "http://localhost:9201/movies/_search",
-			"time": 22,
+			"time": 212,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -69,7 +69,7 @@
 				}
 			},
 			"times": [
-				22
+				212
 			],
 			"allTests": [
 				{
@@ -82,7 +82,7 @@
 			"id": "8e83d09a-4016-4fe9-9d0e-05503c9ede9b",
 			"name": "Запрос на поиск данных по слову camp",
 			"url": "http://localhost:9201/movies/_search",
-			"time": 21,
+			"time": 202,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -102,7 +102,7 @@
 				}
 			},
 			"times": [
-				21
+				202
 			],
 			"allTests": [
 				{
@@ -115,7 +115,7 @@
 			"id": "60b6a783-4c0b-4690-b72e-6d72a6db39a1",
 			"name": "Запрос данных по актеру",
 			"url": "http://localhost:9201/movies/_search",
-			"time": 9,
+			"time": 121,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -135,7 +135,7 @@
 				}
 			},
 			"times": [
-				9
+				121
 			],
 			"allTests": [
 				{
@@ -148,7 +148,7 @@
 			"id": "c48ae218-ad3b-4e2a-962f-f4a5e5ffd93f",
 			"name": "Запрос данных с одним сценаристом",
 			"url": "http://localhost:9201/movies/_search",
-			"time": 11,
+			"time": 23,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -168,7 +168,7 @@
 				}
 			},
 			"times": [
-				11
+				23
 			],
 			"allTests": [
 				{
@@ -181,7 +181,7 @@
 			"id": "0aa95a9b-2ef6-4862-9275-8086bec1f6e6",
 			"name": "Запрос данных без режиссера",
 			"url": "http://localhost:9201/movies/_search",
-			"time": 8,
+			"time": 90,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -201,7 +201,7 @@
 				}
 			},
 			"times": [
-				8
+				90
 			],
 			"allTests": [
 				{
@@ -214,7 +214,7 @@
 			"id": "21f4e747-e558-47b7-a91f-e56a18c349b2",
 			"name": "Проверка количества жанров",
 			"url": "http://localhost:9201/movies/_search",
-			"time": 10,
+			"time": 308,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -234,7 +234,7 @@
 				}
 			},
 			"times": [
-				10
+				308
 			],
 			"allTests": [
 				{
@@ -245,7 +245,7 @@
 		}
 	],
 	"count": 1,
-	"totalTime": 129,
+	"totalTime": 1393,
 	"collection": {
 		"requests": [
 			{
